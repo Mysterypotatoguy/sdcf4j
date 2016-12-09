@@ -21,12 +21,12 @@ package de.btobastian.sdcf4j.handler;
 import de.btobastian.sdcf4j.Command;
 import de.btobastian.sdcf4j.CommandHandler;
 import de.btobastian.sdcf4j.Sdcf4jMessage;
-import net.dv8tion.jda.JDA;
-import net.dv8tion.jda.entities.*;
-import net.dv8tion.jda.events.Event;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.hooks.EventListener;
-import net.dv8tion.jda.utils.SimpleLog;
+import net.dv8tion.jda.core.hooks.EventListener;
+import net.dv8tion.jda.core.utils.SimpleLog;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -112,7 +112,7 @@ public class JDAHandler extends CommandHandler {
         }
         if (!hasPermission(event.getAuthor(), commandAnnotation.requiredPermissions())) {
             if (Sdcf4jMessage.MISSING_PERMISSIONS.getMessage() != null) {
-                event.getChannel().sendMessage(Sdcf4jMessage.MISSING_PERMISSIONS.getMessage());
+                event.getChannel().sendMessage(Sdcf4jMessage.MISSING_PERMISSIONS.getMessage()).queue;
             }
             return;
         }
@@ -148,7 +148,7 @@ public class JDAHandler extends CommandHandler {
             SimpleLog.getLog(getClass().getName()).log(e);
         }
         if (reply != null) {
-            event.getChannel().sendMessage(String.valueOf(reply));
+            event.getChannel().sendMessage(String.valueOf(reply)).queue();
         }
     }
 
